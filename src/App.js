@@ -1,10 +1,21 @@
+
+// TODO : finir linker app with redux to manage
+// isLoginVisible
+
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { StyleSheet, View } from 'react-native';
 import firebase from 'firebase';
-import Config from 'react-native-config'
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  DATABASE_URL,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  MESSAGING_SENDER_ID
+} from 'react-native-dotenv';
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Icon } from 'native-base';
 import MapContainer from './components/MapContainer';
@@ -13,7 +24,7 @@ import reducers from './reducers';
 
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
-export default class App extends Component {
+class App extends Component {
 
   state = {
     isLoginVisible: false
@@ -22,12 +33,12 @@ export default class App extends Component {
   componentWillMount() {
     firebase.initializeApp(
       {
-        apiKey: Config.API_KEY,
-        authDomain: Config.AUTH_DOMAIN,
-        databaseURL: Config.DATABASE_URL,
-        projectId: Config.PROJECT_ID,
-        storageBucket: Config.STORAGE_BUCKET,
-        messagingSenderId: Config.MESSAGING_SENDER_ID
+        apiKey:API_KEY,
+        authDomain:AUTH_DOMAIN,
+        databaseURL:DATABASE_URL,
+        projectId:PROJECT_ID,
+        storageBucket:STORAGE_BUCKET,
+        messagingSenderId:MESSAGING_SENDER_ID
       }
     );
   }
@@ -35,6 +46,8 @@ export default class App extends Component {
   onLoginPress() {
     this.setState({ isLoginVisible:true });
   }
+
+
 
   cancelLogin() {
     this.setState({ isLoginVisible: false});
@@ -107,3 +120,5 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.6 }],
   }
 });
+
+export default App;

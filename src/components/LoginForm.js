@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'react-native';
-import { emailChanged, passwordChanged } from '../actions';
+import { emailChanged, passwordChanged, loginUser } from '../actions';
 import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
 
 class LoginForm extends Component {
@@ -14,7 +14,8 @@ class LoginForm extends Component {
     this.props.passwordChanged(text);
   }
 
-  onLoginPress() {
+  onLoginUser() {
+    console.log('on login press');
     const { email, password } = this.props;
 
     this.props.loginUser({ email, password });
@@ -47,6 +48,7 @@ class LoginForm extends Component {
             </Item>
             <Item last>
               <Input
+                secureTextEntry
                 style={inputStyle}
                 placeholder="Password"
                 onChangeText={this.onPasswordChange.bind(this)}
@@ -56,6 +58,7 @@ class LoginForm extends Component {
             <Button
             block
             style={buttonStyle}
+            onPress={this.onLoginUser.bind(this)}
             >
               <Text>Login</Text>
             </Button>
@@ -79,7 +82,7 @@ const mapStateToProps = ({auth}) => {
 }
 
 export default connect(mapStateToProps, {
-  emailChanged, passwordChanged
+  emailChanged, passwordChanged, loginUser
 })(LoginForm);
 
 const styles = {
