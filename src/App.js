@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { StyleSheet, View } from 'react-native';
 import firebase from 'firebase';
-import { Router, Scene } from 'react-native-router-flux;'
+import { Router, Stack, Scene } from 'react-native-router-flux;'
 import {
   API_KEY,
   AUTH_DOMAIN,
@@ -47,13 +47,13 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <Scene key="root">
-            <Scene key="login" component={Login} />
-            <Scene key="home" component={Home} />
-            <Scene key="userDetails" component={UserDetails} />
-            <Scene key="throneDetails" component={ThroneDetails} />
-            <Scene key="favorites" component={Favorites} />
-          </Scene>
+          <Stack key="root">
+            <Scene key="login" component={Login} title="ThroneAdvisor" />
+            <Scene key="home" component={Home} title="Welcome Back!" />
+            <Scene key="userDetails" component={UserDetails} title="Your Profile"/>
+            <Scene key="throneDetails" component={ThroneDetails} title="Rate It!"/>
+            <Scene key="favorites" component={Favorites} title="Your Favorites" />
+          </Stack>
         </Router>
 
       </Provider>
