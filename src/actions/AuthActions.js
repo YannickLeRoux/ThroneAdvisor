@@ -50,4 +50,5 @@ export const loginUser = ({ email, password }) => {
     });
 
     Actions.main();
+    //dispatch(hideLogin());
   };

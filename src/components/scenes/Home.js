@@ -1,10 +1,13 @@
+
+// TODO : finir linker app with redux to manage
+// isLoginVisible
+
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { StyleSheet, View } from 'react-native';
 import firebase from 'firebase';
-import { Router, Scene } from 'react-native-router-flux;'
 import {
   API_KEY,
   AUTH_DOMAIN,
@@ -19,11 +22,9 @@ import MapContainer from './components/MapContainer';
 import LoginForm from './components/LoginForm';
 import reducers from './reducers';
 
-import { Login, Home, UserDetails, ThroneDetails, Favorites } from './components/scenes';
-
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
-class App extends Component {
+class Home extends Component {
 
   state = {
     isLoginVisible: false,
@@ -42,20 +43,57 @@ class App extends Component {
     );
   }
 
+  onLoginPress() {
+    this.setState({ isLoginVisible:true });
+  }
+
+  loginUser() {
+
+  }
+
+
+
+  cancelLogin() {
+    this.setState({ isLoginVisible: false});
+  }
+
   render() {
 
+    const { container, headerStyle, title, buttonStyle } = styles;
     return (
       <Provider store={store}>
-        <Router>
-          <Scene key="root">
-            <Scene key="login" component={Login} />
-            <Scene key="home" component={Home} />
-            <Scene key="userDetails" component={UserDetails} />
-            <Scene key="throneDetails" component={ThroneDetails} />
-            <Scene key="favorites" component={Favorites} />
-          </Scene>
-        </Router>
-
+      <Container>
+        <Header style={headerStyle}>
+          <Left>
+            <Text style={{color:'white'}}>Log out</Text>
+          </Left>
+          <Body>
+          <Title style={title}>ThroneAdvisor</Title>
+          </Body>
+          <Right>
+            <Button transparent>
+            <Icon type="MaterialIcons" name="add" style={{ color:'white'}} />
+            </Button>
+          </Right>
+        </Header>
+        <View style={container}>
+          <MapContainer />
+        </View>
+        <Footer>
+          <FooterTab>
+            <Button
+              onPress={ this.onLoginPress.bind(this)}
+              block
+              style={buttonStyle}>
+              <Text style={title}>Log In</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
+        <LoginForm
+        visible={ this.state.isLoginVisible }
+        onCancelLogin={this.cancelLogin.bind(this)}
+        />
+      </Container>
       </Provider>
     );
   }
@@ -97,4 +135,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+export { Home };
